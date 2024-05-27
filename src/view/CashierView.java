@@ -157,13 +157,12 @@ public class CashierView extends javax.swing.JFrame {
     
     private void printTransactionOutReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printTransactionOutReportButtonActionPerformed
         PDFGenerator pdfGenerator = new PDFGenerator();
-        String filePath = "transaction_out_report.pdf";
         try {
-            pdfGenerator.generateTransactionOutReport("D:/laporan keluar.pdf");
-            JOptionPane.showMessageDialog(this, "Transaction out report generated successfully at " + filePath);
+            pdfGenerator.generateTransactionOutReport("D:/Laporan Transaksi Keluar.pdf");
+            JOptionPane.showMessageDialog(this, "Berhasil mencetak laporan");
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error generating report: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Gagal mencetak laporan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_printTransactionOutReportButtonActionPerformed
 
@@ -171,7 +170,7 @@ public class CashierView extends javax.swing.JFrame {
         try {
             String selectedProductName = (String) productComboBox.getSelectedItem();
             if (selectedProductName == null) {
-                JOptionPane.showMessageDialog(this, "Please select a product", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Pilih produk", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -187,7 +186,7 @@ public class CashierView extends javax.swing.JFrame {
                 .orElse(null);
 
             if (selectedProduct == null) {
-                JOptionPane.showMessageDialog(this, "Selected product not found", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Produk yang dipilih tidak ada", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -204,7 +203,7 @@ public class CashierView extends javax.swing.JFrame {
             quantityField.setText("");
             productComboBox.setSelectedIndex(0);
 
-            JOptionPane.showMessageDialog(this, "Transaction added successfully");
+            JOptionPane.showMessageDialog(this, "Transaksi berhasil ditambahkan");
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid quantity", "Error", JOptionPane.ERROR_MESSAGE);

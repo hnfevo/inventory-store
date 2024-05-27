@@ -6,8 +6,6 @@ public class Product {
     private double price;
     private int stock;
 
-    // Getter dan Setter
-
     public int getId() {
         return id;
     }

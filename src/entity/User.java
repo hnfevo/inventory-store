@@ -3,9 +3,8 @@ package entity;
 public class User {
     private String username;
     private String password;
-    private String role; // "admin" or "cashier"
+    private String role;
 
-    // Constructor
     public User() {
     }
 
@@ -15,7 +14,6 @@ public class User {
         this.role = role;
     }
 
-    // Getter dan Setter
     public String getUsername() {
         return username;
     }

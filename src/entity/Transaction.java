@@ -5,11 +5,10 @@ import java.util.Date;
 public class Transaction {
     private int id;
     private Date date;
-    private String type; // "in" or "out"
+    private String type;
     private Product product;
     private int quantity;
 
-    // Constructor
     public Transaction() {
     }
 
@@ -21,7 +20,6 @@ public class Transaction {
         this.quantity = quantity;
     }
 
-    // Getter dan Setter
     public int getId() {
         return id;
     }

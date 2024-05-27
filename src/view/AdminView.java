@@ -71,6 +71,10 @@ public class AdminView extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(productTable);
+        if (productTable.getColumnModel().getColumnCount() > 0) {
+            productTable.getColumnModel().getColumn(0).setPreferredWidth(3);
+            productTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+        }
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Nama:");
@@ -255,25 +259,23 @@ public class AdminView extends javax.swing.JFrame {
 
     private void printTransactionReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printTransactionReportButtonActionPerformed
         PDFGenerator pdfGenerator = new PDFGenerator();
-        String filePath = "transaction_out_report.pdf";
         try {
-            pdfGenerator.generateTransactionOutReport("D:/laporan out.pdf");
-            JOptionPane.showMessageDialog(this, "Transaction out report generated successfully at " + filePath);
+            pdfGenerator.generateTransactionOutReport("D:/Laporan Transaksi Masuk.pdf");
+            JOptionPane.showMessageDialog(this, "Berhasil mencetak laporan");
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error generating report: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Gagal mencetak laporan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_printTransactionReportButtonActionPerformed
 
     private void printProductReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printProductReportButtonActionPerformed
         PDFGenerator pdfGenerator = new PDFGenerator();
-        String filePath = "transaction_out_report.pdf";
         try {
-            pdfGenerator.generateTransactionOutReport("D:/laporan barang.pdf");
-            JOptionPane.showMessageDialog(this, "Transaction out report generated successfully at " + filePath);
+            pdfGenerator.generateTransactionOutReport("D:/Laporan Data Barang.pdf");
+            JOptionPane.showMessageDialog(this, "Berhasil mencetak laporan");
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error generating report: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Gagal mencetak laporan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_printProductReportButtonActionPerformed
 
@@ -283,7 +285,7 @@ public class AdminView extends javax.swing.JFrame {
         String stockText = stockField.getText();
 
         if (name.isEmpty() || priceText.isEmpty() || stockText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill all fields", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Silahkan isi semua kolom", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
     
@@ -311,13 +313,13 @@ public class AdminView extends javax.swing.JFrame {
         priceField.setText("");
         stockField.setText("");
     
-        JOptionPane.showMessageDialog(this, "Product added successfully");
+        JOptionPane.showMessageDialog(this, "Produk berhasil ditambahkan");
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         int selectedRow = productTable.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a product to update", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Pilih produk yang diperbarui", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -326,7 +328,7 @@ public class AdminView extends javax.swing.JFrame {
         String stockText = stockField.getText();
 
         if (name.isEmpty() || priceText.isEmpty() || stockText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill all fields", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Silahkan isi semua kolom", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -357,13 +359,13 @@ public class AdminView extends javax.swing.JFrame {
         priceField.setText("");
         stockField.setText("");
 
-        JOptionPane.showMessageDialog(this, "Product updated successfully");
+        JOptionPane.showMessageDialog(this, "Produk berhasil diperbarui");
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int selectedRow = productTable.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a product to delete", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Pilih produk yang dihapus", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -373,14 +375,14 @@ public class AdminView extends javax.swing.JFrame {
 
         loadProductTableData();
 
-        JOptionPane.showMessageDialog(this, "Product deleted successfully");
+        JOptionPane.showMessageDialog(this, "Produk berhasil dihapus");
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void addTransactionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTransactionButtonActionPerformed
         try {
             String selectedProductName = (String) productComboBox.getSelectedItem();
             if (selectedProductName == null) {
-                JOptionPane.showMessageDialog(this, "Please select a product", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Pilih produk", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -396,7 +398,7 @@ public class AdminView extends javax.swing.JFrame {
                 .orElse(null);
 
             if (selectedProduct == null) {
-                JOptionPane.showMessageDialog(this, "Selected product not found", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Produk yang dipilih tidak ada", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -413,7 +415,7 @@ public class AdminView extends javax.swing.JFrame {
             quantityField.setText("");
             productComboBox.setSelectedIndex(0);
 
-            JOptionPane.showMessageDialog(this, "Transaction added successfully");
+            JOptionPane.showMessageDialog(this, "Transaksi berhasil ditambahkan");
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid quantity", "Error", JOptionPane.ERROR_MESSAGE);
