@@ -13,5 +13,5 @@ Admin
 - Password: admin123
 
 Cashier
-- Username: cashier
-- Password: cashier123
+- Username: kasir
+- Password: kasir123
