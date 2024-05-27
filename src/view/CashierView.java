@@ -190,6 +190,11 @@ public class CashierView extends javax.swing.JFrame {
                 return;
             }
 
+            if (selectedProduct.getStock() < quantity) {
+                JOptionPane.showMessageDialog(this, "Stok tidak cukup", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             Transaction transaction = new Transaction();
             transaction.setDate(new java.util.Date());
             transaction.setType("out");
@@ -197,7 +202,9 @@ public class CashierView extends javax.swing.JFrame {
             transaction.setQuantity(quantity);
 
             transactionService.addTransaction(transaction);
+            productService.reduceProductStock(selectedProduct.getId(), quantity);
             loadTransactionData();
+            loadProductData();
 
             // Clear input fields
             quantityField.setText("");
