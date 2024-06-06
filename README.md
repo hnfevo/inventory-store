@@ -6,6 +6,8 @@ Add JAR [MySQL Connectors](https://cdn.mysql.com/archives/mysql-connector-java-8
 
 Create database named "inventorydb" and import [SQL.](https://github.com/hnfevo/inventory-store/files/15451134/inventorydb.zip)
 
+Use Java Platform JDK 1.8
+
 Default username and password used to login:
 
 Admin
