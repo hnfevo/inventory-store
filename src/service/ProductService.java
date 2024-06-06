@@ -73,6 +73,18 @@ public class ProductService {
         }
     }
     
+    public void increaseProductStock(int productId, int quantity) {
+        try {
+            String query = "UPDATE products SET stock = stock + ? WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, quantity);
+            statement.setInt(2, productId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void reduceProductStock(int productId, int quantity) {
         try {
             String query = "UPDATE products SET stock = stock - ? WHERE id = ?";

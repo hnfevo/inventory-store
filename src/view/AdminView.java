@@ -4,14 +4,22 @@ import entity.Product;
 import entity.Transaction;
 import service.ProductService;
 import service.TransactionService;
-import utils.PDFGenerator;
-import com.itextpdf.text.DocumentException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import utils.DatabaseConnection;
 
 public class AdminView extends javax.swing.JFrame {
 
@@ -99,7 +107,7 @@ public class AdminView extends javax.swing.JFrame {
             }
         });
 
-        printProductReportButton.setText("Cetak Laporan");
+        printProductReportButton.setText("Cetak");
         printProductReportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 printProductReportButtonActionPerformed(evt);
@@ -258,24 +266,30 @@ public class AdminView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void printTransactionReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printTransactionReportButtonActionPerformed
-        PDFGenerator pdfGenerator = new PDFGenerator();
+        Map map = new HashMap();
         try {
-            pdfGenerator.generateTransactionOutReport("D:/Laporan Transaksi Masuk.pdf");
-            JOptionPane.showMessageDialog(this, "Berhasil mencetak laporan");
-        } catch (DocumentException | IOException e) {
+            JasperDesign jasperDesign = JRXmlLoader.load("src/utils/transactionReport.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, DatabaseConnection.getConnection());
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.setTitle("Data Barang");
+            jasperViewer.setVisible(true);
+        } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Gagal mencetak laporan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_printTransactionReportButtonActionPerformed
 
     private void printProductReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printProductReportButtonActionPerformed
-        PDFGenerator pdfGenerator = new PDFGenerator();
+        Map map = new HashMap();
         try {
-            pdfGenerator.generateTransactionOutReport("D:/Laporan Data Barang.pdf");
-            JOptionPane.showMessageDialog(this, "Berhasil mencetak laporan");
-        } catch (DocumentException | IOException e) {
+            JasperDesign jasperDesign = JRXmlLoader.load("src/utils/productReport.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, DatabaseConnection.getConnection());
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.setTitle("Data Barang");
+            jasperViewer.setVisible(true);
+        } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Gagal mencetak laporan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_printProductReportButtonActionPerformed
 
@@ -402,13 +416,19 @@ public class AdminView extends javax.swing.JFrame {
                 return;
             }
 
+            // Assume the transaction type is "in" (for incoming transaction)
             Transaction transaction = new Transaction();
             transaction.setDate(new java.util.Date());
-            transaction.setType("out");
+            transaction.setType("in");
             transaction.setProduct(selectedProduct);
             transaction.setQuantity(quantity);
 
             transactionService.addTransaction(transaction);
+
+            // Increase product stock
+            productService.increaseProductStock(selectedProduct.getId(), quantity);
+            loadProductTableData();
+
             loadTransactionData();
 
             // Clear input fields

@@ -3,17 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Coding/Java/InventoryStore/src/view/AdminView.java</file>
             <file>file:/D:/Coding/Java/InventoryStore/src/utils/DatabaseConnection.java</file>
+            <file>file:/D:/Coding/Java/InventoryStore/src/view/AdminView.java</file>
             <file>file:/D:/Coding/Java/InventoryStore/src/service/UserService.java</file>
-            <file>file:/D:/Coding/Java/InventoryStore/src/utils/PDFGenerator.java</file>
             <file>file:/D:/Coding/Java/InventoryStore/src/view/CashierView.java</file>
             <file>file:/D:/Coding/Java/InventoryStore/src/service/TransactionService.java</file>
-            <file>file:/D:/Coding/Java/InventoryStore/src/Main/App.java</file>
-            <file>file:/D:/Coding/Java/InventoryStore/src/view/LoginView.java</file>
             <file>file:/D:/Coding/Java/InventoryStore/src/service/ProductService.java</file>
+            <file>file:/D:/Coding/Java/InventoryStore/src/utils/productReport.jrxml</file>
             <file>file:/D:/Coding/Java/InventoryStore/src/entity/Product.java</file>
             <file>file:/D:/Coding/Java/InventoryStore/src/entity/Transaction.java</file>
+            <file>file:/D:/Coding/Java/InventoryStore/src/utils/transactionReport.jrxml</file>
             <file>file:/D:/Coding/Java/InventoryStore/src/entity/User.java</file>
         </group>
     </open-files>

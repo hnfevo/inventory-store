@@ -4,13 +4,21 @@ import entity.Transaction;
 import entity.Product;
 import service.TransactionService;
 import service.ProductService;
-import utils.PDFGenerator;
-import com.itextpdf.text.DocumentException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import utils.DatabaseConnection;
 
 public class CashierView extends javax.swing.JFrame {
 
@@ -156,13 +164,16 @@ public class CashierView extends javax.swing.JFrame {
     }
     
     private void printTransactionOutReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printTransactionOutReportButtonActionPerformed
-        PDFGenerator pdfGenerator = new PDFGenerator();
+        Map map = new HashMap();
         try {
-            pdfGenerator.generateTransactionOutReport("D:/Laporan Transaksi Keluar.pdf");
-            JOptionPane.showMessageDialog(this, "Berhasil mencetak laporan");
-        } catch (DocumentException | IOException e) {
+            JasperDesign jasperDesign = JRXmlLoader.load("src/utils/transactionReport.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, DatabaseConnection.getConnection());
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.setTitle("Data Barang");
+            jasperViewer.setVisible(true);
+        } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Gagal mencetak laporan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_printTransactionOutReportButtonActionPerformed
 
