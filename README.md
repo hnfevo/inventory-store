@@ -4,7 +4,7 @@ Object Oriented Programming Major Assignment.
 ## Configuration
 Add [JAR](https://github.com/user-attachments/files/15614474/JAR.zip) to Libraries.
 
-Create database named "inventorydb" and import [SQL.](https://github.com/user-attachments/files/15614492/inventorydb.zip)
+Create database named "inventorydb" and import [SQL.](https://github.com/user-attachments/files/15776320/inventorydb.zip)
 
 Use Java Platform JDK 1.8
 
