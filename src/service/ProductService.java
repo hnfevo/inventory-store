@@ -67,11 +67,14 @@ public class ProductService {
             String query = "DELETE FROM products WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, productId);
-            statement.executeUpdate();
+            int rowsAffected = statement.executeUpdate();
+
+            System.out.println("Rows affected: " + rowsAffected);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     
     public void increaseProductStock(int productId, int quantity) {
         try {

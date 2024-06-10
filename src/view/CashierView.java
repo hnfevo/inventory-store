@@ -7,7 +7,6 @@ import service.ProductService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,31 +38,35 @@ public class CashierView extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         transactionTable = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        Produk = new javax.swing.JLabel();
         productComboBox = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         quantityField = new javax.swing.JTextField();
         addTransactionButton = new javax.swing.JButton();
         printTransactionOutReportButton = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        akun = new javax.swing.JMenu();
+        akunDetail = new javax.swing.JMenuItem();
+        akunKeluar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kasir");
 
         transactionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Date", "Type", "Product", "Quantity"
+                "Tanggal", "Produk", "Status", "Jumlah"
             }
         ));
         jScrollPane1.setViewportView(transactionTable);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("Product:");
+        Produk.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Produk.setText("Product:");
 
         productComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         productComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -73,7 +76,7 @@ public class CashierView extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Quantity:");
+        jLabel2.setText("Jumlah:");
         jLabel2.setAutoscrolls(true);
 
         quantityField.addActionListener(new java.awt.event.ActionListener() {
@@ -82,19 +85,46 @@ public class CashierView extends javax.swing.JFrame {
             }
         });
 
-        addTransactionButton.setText("Add Transaction");
+        addTransactionButton.setText("Tambah");
         addTransactionButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addTransactionButtonActionPerformed(evt);
             }
         });
 
-        printTransactionOutReportButton.setText("Print Transaction Out Report");
+        printTransactionOutReportButton.setText("Cetak");
         printTransactionOutReportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 printTransactionOutReportButtonActionPerformed(evt);
             }
         });
+
+        akun.setText("Akun");
+        akun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                akunActionPerformed(evt);
+            }
+        });
+
+        akunDetail.setText("Detail");
+        akunDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                akunDetailActionPerformed(evt);
+            }
+        });
+        akun.add(akunDetail);
+
+        akunKeluar.setText("Keluar");
+        akunKeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                akunKeluarActionPerformed(evt);
+            }
+        });
+        akun.add(akunKeluar);
+
+        jMenuBar1.add(akun);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,7 +141,7 @@ public class CashierView extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1))
+                            .addComponent(Produk))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -119,9 +149,9 @@ public class CashierView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addComponent(Produk)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(productComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -145,11 +175,10 @@ public class CashierView extends javax.swing.JFrame {
 
         for (Transaction transaction : transactions) {
             Object[] row = {
-                transaction.getId(),
                 transaction.getDate(),
-                transaction.getType(),
-                transaction.getProduct().getName(),
-                transaction.getQuantity()
+                transaction.getProduct().getName(), // Product
+                transaction.getType(), // Type
+                transaction.getQuantity() // Quantity
             };
             model.addRow(row);
         }
@@ -236,6 +265,20 @@ public class CashierView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_productComboBoxActionPerformed
 
+    private void akunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_akunActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_akunActionPerformed
+
+    private void akunDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_akunDetailActionPerformed
+        UserDetail userDetail = new UserDetail();
+        userDetail.setVisible(true);
+    }//GEN-LAST:event_akunDetailActionPerformed
+
+    private void akunKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_akunKeluarActionPerformed
+        this.dispose();
+        new LoginView().setVisible(true);
+    }//GEN-LAST:event_akunKeluarActionPerformed
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -246,9 +289,13 @@ public class CashierView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Produk;
     private javax.swing.JButton addTransactionButton;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu akun;
+    private javax.swing.JMenuItem akunDetail;
+    private javax.swing.JMenuItem akunKeluar;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton printTransactionOutReportButton;
     private javax.swing.JComboBox<String> productComboBox;

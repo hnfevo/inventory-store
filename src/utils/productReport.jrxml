@@ -28,13 +28,14 @@
 	<title>
 		<band height="70" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="b81d3e41-1c60-4344-b4f9-9d17aa3c1d25"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Leaf Gray Title]]></text>
+				<reportElement style="Title" x="151" y="0" width="263" height="33" uuid="b81d3e41-1c60-4344-b4f9-9d17aa3c1d25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Laporan Stok Barang]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="117" y="46" width="157" height="22" uuid="9539d6b3-e7bf-4020-acf3-5cb074fc7a33"/>
-				<text><![CDATA[Leaf Gray SubTitle]]></text>
+				<reportElement style="SubTitle" x="197" y="48" width="157" height="22" uuid="9539d6b3-e7bf-4020-acf3-5cb074fc7a33"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Griya Mami Heppy]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -51,19 +52,19 @@
 			</line>
 			<staticText>
 				<reportElement style="Column header" x="0" y="19" width="138" height="15" uuid="131a6c36-9a27-46d0-a29d-299377138d07"/>
-				<text><![CDATA[id]]></text>
+				<text><![CDATA[Kode]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="138" y="19" width="138" height="15" uuid="7d5e5c20-450c-4587-837e-ef95e6a17c86"/>
-				<text><![CDATA[name]]></text>
+				<text><![CDATA[Nama]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="276" y="19" width="138" height="15" uuid="91245ff7-0786-4e42-aa55-055b29e4a778"/>
-				<text><![CDATA[price]]></text>
+				<text><![CDATA[Harga]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="414" y="19" width="138" height="15" uuid="031b315e-996d-4124-bea7-234e43027e66"/>
-				<text><![CDATA[stock]]></text>
+				<text><![CDATA[Stok]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

@@ -3,7 +3,9 @@ package service;
 import entity.Product;
 import entity.Transaction;
 import utils.DatabaseConnection;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,12 +76,12 @@ public class TransactionService {
             e.printStackTrace();
         }
     }
-
-    public void deleteTransaction(int transactionId) {
+    
+    public void deleteTransactionsByProductId(int productId) {
         try {
-            String query = "DELETE FROM transactions WHERE id = ?";
+            String query = "DELETE FROM transactions WHERE product_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, transactionId);
+            statement.setInt(1, productId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

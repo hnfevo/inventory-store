@@ -7,8 +7,6 @@ import service.TransactionService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +61,10 @@ public class AdminView extends javax.swing.JFrame {
         productComboBox = new javax.swing.JComboBox<>();
         addTransactionButton = new javax.swing.JButton();
         printTransactionReportButton = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        akun = new javax.swing.JMenu();
+        akunDetail = new javax.swing.JMenuItem();
+        akunKeluar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Admin");
@@ -75,7 +77,7 @@ public class AdminView extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "Nama", "Harga", "Stok"
+                "Kode", "Nama", "Harga", "Stok"
             }
         ));
         jScrollPane1.setViewportView(productTable);
@@ -107,7 +109,7 @@ public class AdminView extends javax.swing.JFrame {
             }
         });
 
-        printProductReportButton.setText("Cetak");
+        printProductReportButton.setText("Cetak Laporan");
         printProductReportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 printProductReportButtonActionPerformed(evt);
@@ -148,7 +150,7 @@ public class AdminView extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -176,13 +178,13 @@ public class AdminView extends javax.swing.JFrame {
 
         transactionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Tanggal", "ID", "Produk", "Status", "Jumlah"
+                "Tanggal", "Produk", "Status", "Jumlah"
             }
         ));
         jScrollPane2.setViewportView(transactionTable);
@@ -230,7 +232,7 @@ public class AdminView extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -246,7 +248,29 @@ public class AdminView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        JTabbedPane.addTab("Transaksi Masuk", jPanel2);
+        JTabbedPane.addTab("Transaksi", jPanel2);
+
+        akun.setText("Akun");
+
+        akunDetail.setText("Detail");
+        akunDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                akunDetailActionPerformed(evt);
+            }
+        });
+        akun.add(akunDetail);
+
+        akunKeluar.setText("Keluar");
+        akunKeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                akunKeluarActionPerformed(evt);
+            }
+        });
+        akun.add(akunKeluar);
+
+        jMenuBar1.add(akun);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -259,7 +283,9 @@ public class AdminView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JTabbedPane)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(JTabbedPane))
         );
 
         pack();
@@ -385,6 +411,10 @@ public class AdminView extends javax.swing.JFrame {
 
         int productId = (int) productTable.getValueAt(selectedRow, 0);
 
+        System.out.println("Deleting transactions related to product ID: " + productId);
+        transactionService.deleteTransactionsByProductId(productId);
+
+        System.out.println("Deleting product with ID: " + productId);
         productService.deleteProduct(productId);
 
         loadProductTableData();
@@ -442,6 +472,16 @@ public class AdminView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addTransactionButtonActionPerformed
 
+    private void akunKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_akunKeluarActionPerformed
+        this.dispose();
+        new LoginView().setVisible(true);
+    }//GEN-LAST:event_akunKeluarActionPerformed
+
+    private void akunDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_akunDetailActionPerformed
+        UserDetail userDetail = new UserDetail();
+        userDetail.setVisible(true);
+    }//GEN-LAST:event_akunDetailActionPerformed
+
     private void loadProductTableData() {
         List<Product> products = productService.getAllProducts();
         DefaultTableModel model = (DefaultTableModel) productTable.getModel();
@@ -476,7 +516,6 @@ public class AdminView extends javax.swing.JFrame {
         for (Transaction transaction : transactions) {
             Object[] row = {
                 transaction.getDate(),
-                transaction.getId(),
                 transaction.getProduct().getName(),
                 transaction.getType(),
                 transaction.getQuantity()
@@ -498,12 +537,16 @@ public class AdminView extends javax.swing.JFrame {
     private javax.swing.JTabbedPane JTabbedPane;
     private javax.swing.JButton addButton;
     private javax.swing.JButton addTransactionButton;
+    private javax.swing.JMenu akun;
+    private javax.swing.JMenuItem akunDetail;
+    private javax.swing.JMenuItem akunKeluar;
     private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
